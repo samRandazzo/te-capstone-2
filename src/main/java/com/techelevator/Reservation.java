@@ -10,14 +10,14 @@ public class Reservation {
 	public LocalDate fromDate, toDate, createDate;
 
 	
-	public Reservation(int reservationId, int siteId, String name, LocalDate fromDate, LocalDate toDate, LocalDate createDate) {
+	/*public Reservation(int reservationId, int siteId, String name, LocalDate fromDate, LocalDate toDate, LocalDate createDate) {
 		this.createDate = createDate;
 		this.fromDate = fromDate;
 		this.name = name;
 		this.reservationId = reservationId;
 		this.toDate = toDate;
 		this.siteId = siteId;
-	}
+	}*/
 	
 	public LocalDate getCreateDate() {
 		return createDate;

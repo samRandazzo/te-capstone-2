@@ -9,7 +9,7 @@ public class Park {
 	private LocalDate establishDate;
 	
 	
-	
+/*	
 	public Park(int parkID, int area, int visitors, String name, String location, String description, LocalDate establishDate) {
 		
 		this.area =area;
@@ -20,8 +20,13 @@ public class Park {
 		this.description = description;
 		this.establishDate =establishDate;
 		}
+	*/
+
+
 	
-	
+
+
+
 	public int getArea() {
 		return area;
 	}
