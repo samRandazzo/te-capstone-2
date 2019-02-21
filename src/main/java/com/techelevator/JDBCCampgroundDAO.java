@@ -10,12 +10,12 @@ import org.springframework.jdbc.support.rowset.SqlRowSet;
 import com.techelevator.Campground;
 import com.techelevator.CampgroundDAO;
 
-public class JDBCCampgroundDOA implements CampgroundDAO{
+public class JDBCCampgroundDAO implements CampgroundDAO{
 	
 
 	private JdbcTemplate jdbcTemplate;
 	
-	public JDBCCampgroundDOA(DataSource dataSource) {
+	public JDBCCampgroundDAO(DataSource dataSource) {
 		this.jdbcTemplate = new JdbcTemplate(dataSource);
 	}
 
