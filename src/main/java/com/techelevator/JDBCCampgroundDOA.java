@@ -1,11 +1,14 @@
 package com.techelevator;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.sql.DataSource;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
+import com.techelevator.Campground;
+import com.techelevator.CampgroundDAO;
 
 public class JDBCCampgroundDOA implements CampgroundDAO{
 	
@@ -17,23 +20,34 @@ public class JDBCCampgroundDOA implements CampgroundDAO{
 	}
 
 	@Override
-	public List<Campground> getCampgroundsByParkID(int parkID) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Campground> getCampgroundsByParkID() {
+		List<Campground> campgroundList = new ArrayList <Campground>();
+		String sqlFindAllCampgrounds = "SELECT * " + 
+									   "FROM campground;";
+		
+		SqlRowSet results = jdbcTemplate.queryForRowSet(sqlFindAllCampgrounds);
+		while(results.next()) {
+			Campground c = mapRowToCampground(results);
+			campgroundList.add(c);
+		}
+									
+		return campgroundList;
 	}
-private Park mapRowToPark(SqlRowSet results) {
-	Park thePark = new Park();
-	thePark.setArea(results.getInt("area"));
-	thePark.setDescription(results.getString("description"));
-	thePark.setEstablishDate(results.getDate("establish_date").toLocalDate());
-	thePark.setLocation(results.getString("location"));
-	thePark.setName(results.getString("name"));
-	thePark.setParkId(results.getInt("park_id"));
-	thePark.setVisitors(results.getInt("vistors"));
+
+
+
+private Campground mapRowToCampground(SqlRowSet results) {
+	Campground theCampground;
+	theCampground = new Campground();
+	theCampground.setCampgroundId(results.getInt("campground_id"));
+	theCampground.setName(results.getString("name"));
+	theCampground.setParkId(results.getInt("park_id"));
+	theCampground.setOpenFrom(results.getString("open_from_mm"));
+	theCampground.setOpenTo(results.getString("open_to_mm"));
+	theCampground.setDailyFee(results.getString("daily_fee"));
+
 	
-	return thePark;
-}
-
-
+	return theCampground;
+	}
 
 }
