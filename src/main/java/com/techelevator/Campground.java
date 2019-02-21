@@ -1,47 +1,56 @@
 package com.techelevator;
 
 public class Campground {
-	
-	
-	public int campgroundId, parkId, openTo, openFrom;
-	public String name;
-	public Double dailyFee;
-	
-	
-	public Campground(int campgroundId, int parkId, int openTo, int openFrom, String name, Double dailyFee) {
-		this.campgroundId = campgroundId;
-		this.dailyFee = dailyFee;
-		this.parkId = parkId;
-		this.openFrom = openFrom;
-		this.openTo = openTo;
-		this.name= name;
-		
-	}
+
+	private int campgroundId, parkId;
+	private String name, openTo, openFrom, dailyFee;
+
 	public int getCampgroundId() {
 		return campgroundId;
-	}public Double getDailyFee() {
+	}
+
+	public String getDailyFee() {
 		return dailyFee;
-	}public String getName() {
+	}
+
+	public String getName() {
 		return name;
-	}public int getOpenFrom() {
+	}
+
+	public String getOpenFrom() {
 		return openFrom;
-	}public int getOpenTo() {
+	}
+
+	public String getOpenTo() {
 		return openTo;
-	}public int getParkId() {
+	}
+
+	public int getParkId() {
 		return parkId;
-	}public void setCampgroundId(int campgroundId) {
+	}
+
+	public void setCampgroundId(int campgroundId) {
 		this.campgroundId = campgroundId;
-	}public void setDailyFee(Double dailyFee) {
+	}
+
+	public void setDailyFee(String dailyFee) {
 		this.dailyFee = dailyFee;
-	}public void setName(String name) {
+	}
+
+	public void setName(String name) {
 		this.name = name;
-	}public void setOpenFrom(int openFrom) {
+	}
+
+	public void setOpenFrom(String openFrom) {
 		this.openFrom = openFrom;
-	}public void setOpenTo(int openTo) {
+	}
+
+	public void setOpenTo(String openTo) {
 		this.openTo = openTo;
-	}public void setParkId(int parkId) {
+	}
+
+	public void setParkId(int parkId) {
 		this.parkId = parkId;
 	}
-	
 
 }
