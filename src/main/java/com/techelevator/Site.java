@@ -2,12 +2,12 @@ package com.techelevator;
 
 public class Site {
 
-	
+	//might break from Int, change to long if so 
 	private int siteId, campgroundId, siteNumber, maxOccupancy, maxRvLength;
 	private boolean accessible, utilities;
 	
 	
-	public Site(int siteId, int campgroundId, int siteNumber, int maxOccupancy, int maxRvLength, boolean accessible, boolean utilities) {
+/* public Site(int siteId, int campgroundId, int siteNumber, int maxOccupancy, int maxRvLength, boolean accessible, boolean utilities) {
 		this.accessible = accessible;
 		this.campgroundId = campgroundId;
 		this.maxOccupancy = maxOccupancy;
@@ -15,7 +15,8 @@ public class Site {
 		this.siteId = siteId;
 		this.siteNumber = siteNumber;
 		this.utilities = utilities;
-	}
+	}*/
+	
 	
 	public int getCampgroundId() {
 		return campgroundId;

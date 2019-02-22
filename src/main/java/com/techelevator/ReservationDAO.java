@@ -8,7 +8,7 @@ public interface ReservationDAO {
 	int createReservation(int siteId, String name, LocalDate fromDate, LocalDate toDate);
 
 	
-	List<Reservation> reservations (Campground campground);
+	List<Reservation> reservations (int siteId, String fromDate);
 		
 		
 	}
