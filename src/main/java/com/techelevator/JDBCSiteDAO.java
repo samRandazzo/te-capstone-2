@@ -29,7 +29,7 @@ public class JDBCSiteDAO implements SiteDAO {
 	}
 		public List<Site> availableSites(int siteId, String fromDate, String toDate) {
 			ArrayList<Site> aSite = new ArrayList<>();
-			String sqlGetAvailableSites = "Select Site.*, campground.campground_id from  WHERE reservation_id = ? and site_id = ? order by site.site_id Limit 5";
+			String sqlGetAvailableSites = "Select Site.* from site where site_id NOT IN (SELECT * from Reservation where reservation_id = ? and site_id = ?) order by site.site_id Limit 5";
 			SqlRowSet results = jdbctemplate.queryForRowSet(sqlGetAvailableSites,siteId, fromDate, toDate);
 			while(results.next()) {
 				Site availableSite = mapRowToSite(results);
