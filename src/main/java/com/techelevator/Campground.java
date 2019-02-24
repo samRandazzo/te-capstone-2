@@ -3,7 +3,9 @@ package com.techelevator;
 public class Campground {
 
 	private int campgroundId, parkId;
-	private String name, openTo, openFrom, dailyFee;
+	private String name, dailyFee;
+	int openFrom;
+	int openTo;
 
 	public int getCampgroundId() {
 		return campgroundId;
@@ -17,11 +19,11 @@ public class Campground {
 		return name;
 	}
 
-	public String getOpenFrom() {
+	public int getOpenFrom() {
 		return openFrom;
 	}
 
-	public String getOpenTo() {
+	public int getOpenTo() {
 		return openTo;
 	}
 
@@ -41,11 +43,11 @@ public class Campground {
 		this.name = name;
 	}
 
-	public void setOpenFrom(String openFrom) {
+	public void setOpenFrom(int openFrom) {
 		this.openFrom = openFrom;
 	}
 
-	public void setOpenTo(String openTo) {
+	public void setOpenTo(int openTo) {
 		this.openTo = openTo;
 	}
 

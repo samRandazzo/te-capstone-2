@@ -4,65 +4,60 @@ import java.time.LocalDate;
 
 public class Park {
 	
-	private int parkId, area, visitors;
-	private String name, location, description;
+	private Long parkId;
+	private String name;
+	private String location;
 	private LocalDate establishDate;
+	private Long area;
+	private Long visitors;
+	private String description;
 	
 	
-/*	
-	public Park(int parkID, int area, int visitors, String name, String location, String description, LocalDate establishDate) {
-		
-		this.area =area;
-		this.parkId = parkID;
-		this.visitors = visitors;
-		this.name = name;
-		this.location = location;
-		this.description = description;
-		this.establishDate =establishDate;
-		}
-	*/
-
-
-	
-
-
-
-	public int getArea() {
-		return area;
+	public Long getParkId() {
+		return parkId;
 	}
-	public String getDescription() {
-		return description;
-	}
-	public LocalDate getEstablishDate() {
-		return establishDate;
-	}
-	public String getLocation() {
-		return location;
+	public void setParkId(Long parkId) {
+		this.parkId = parkId;
 	}
 	public String getName() {
 		return name;
 	}
-	public int getParkId() {
-		return parkId;
+	public void setName(String name) {
+		this.name = name;
 	}
-	public int getVisitors() {
+	public String getLocation() {
+		return location;
+	}
+	public void setLocation(String location) {
+		this.location = location;
+	}
+	public LocalDate getEstablishDate() {
+		return establishDate;
+	}
+	public void setEstablishDate(LocalDate establishDate) {
+		this.establishDate = establishDate;
+	}
+	public long getArea() {
+		return area;
+	}
+	public void setArea(long area) {
+		this.area = area;
+	}
+	public long getVisitors() {
 		return visitors;
 	}
-public void setArea(int area) {
-	this.area = area;
-}
-public void setDescription(String description) {
-	this.description = description;
-}public void setEstablishDate(LocalDate establishDate) {
-	this.establishDate = establishDate;
-}public void setLocation(String location) {
-	this.location = location;
-}public void setName(String name) {
-	this.name = name;
-}public void setParkId(int parkId) {
-	this.parkId = parkId;
-}public void setVisitors(int visitors) {
-	this.visitors = visitors;
-}
+	public void setVisitors(long visitors) {
+		this.visitors = visitors;
+	}
+	public String getDescription() {
+		return description;
+	}
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public String toString() {
+		return name + ", " + location;
+	}
 }
 

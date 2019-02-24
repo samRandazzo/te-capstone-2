@@ -1,14 +1,11 @@
 package com.techelevator;
 
 import java.time.LocalDate;
-import java.util.List;
 
 public interface ReservationDAO {
 	
-	int createReservation(int siteId, String name, LocalDate fromDate, LocalDate toDate);
-
 	
-	List<Reservation> reservations (int siteId, String fromDate);
+	public long makeReservation (long site_id, String name, LocalDate startDate, LocalDate endDate);
 		
 		
 	}

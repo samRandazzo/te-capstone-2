@@ -29,6 +29,10 @@ public class Menu {
 		String userInput = in.nextLine();
 		try {
 			int selectedOption = Integer.valueOf(userInput);
+			if(selectedOption <= 0 ) {
+				out.println("\n*** "+userInput+" is not a valid option");
+			}
+			
 			if(selectedOption <= options.length) {
 				choice = options[selectedOption - 1];
 			}
@@ -49,5 +53,11 @@ public class Menu {
 		}
 		out.print("\nPlease choose an option >>> ");
 		out.flush();
+	}
+	
+
+	public String getUserInput() {
+		String input = this.in.nextLine();
+		return input;
 	}
 }

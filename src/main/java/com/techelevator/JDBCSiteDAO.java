@@ -1,5 +1,6 @@
 package com.techelevator;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,25 +19,26 @@ public class JDBCSiteDAO implements SiteDAO {
 		this.jdbctemplate = new JdbcTemplate(dataSource);
 		
 	}
-		public List<Site> getSitesByCampgroundId(int campgroundId) {
-		ArrayList<Site> allSites = new ArrayList<>();
-		String sqlGetAllSites = "SELECT * FROM Site Where campground_id = ?";
-		SqlRowSet results = jdbctemplate.queryForRowSet(sqlGetAllSites, campgroundId);
+	@Override
+	public List<Site> getAvailableSitesByReservationDate(long campgroundId, LocalDate startDate, LocalDate endDate) {
+		List<Site> availableSites = new ArrayList<Site>();
+		String sqlFindTopFiveAvailableSites = "SELECT distinct * FROM site " + 
+				"join campground on site.campground_id = campground.campground_id " + 
+				"where site.campground_id = ? " + 
+				"and site_id not in " + 
+				"(select site.site_id from site " + 
+				"JOIN reservation ON reservation.site_id = site.site_id " + 
+				"WHERE ? > reservation.from_date and ? < reservation.to_date) " + 
+				"order by daily_fee " + 
+				"LIMIT 5";
+		Site theSite;
+		SqlRowSet results = jdbctemplate.queryForRowSet(sqlFindTopFiveAvailableSites, campgroundId, startDate, endDate);
 		while(results.next()) {
-			Site eachSite = mapRowToSite(results);
-			allSites.add(eachSite);
-		}return allSites;
-	}
-		public List<Site> availableSites(int siteId, String fromDate, String toDate) {
-			ArrayList<Site> aSite = new ArrayList<>();
-			String sqlGetAvailableSites = "Select Site.* from site where site_id NOT IN (SELECT * from Reservation where reservation_id = ? and site_id = ?) order by site.site_id Limit 5";
-			SqlRowSet results = jdbctemplate.queryForRowSet(sqlGetAvailableSites,siteId, fromDate, toDate);
-			while(results.next()) {
-				Site availableSite = mapRowToSite(results);
-				aSite.add(availableSite);
-			}
-			return aSite;
+			theSite = mapRowToSite(results);
+			availableSites.add(theSite);
 		}
+		return  availableSites;
+	}
 
 	
 
@@ -48,8 +50,8 @@ public class JDBCSiteDAO implements SiteDAO {
 		theSite.setSiteNumber(results.getInt("site_number"));
 		theSite.setMaxOccupancy(results.getInt("max_occupancy"));
 		theSite.setMaxRvLength(results.getInt("max_rv_length"));
-		theSite.setAccessible(results.getBoolean("accesible"));
-		theSite.setUtilities(results.getBoolean("utilities"));
+		theSite.setAccessible(results.getBoolean("accessible"));
+		theSite.setHasUtilities(results.getBoolean("utilities"));
 		
 		
 		return theSite;
