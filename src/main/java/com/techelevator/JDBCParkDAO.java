@@ -21,47 +21,43 @@ private JdbcTemplate jdbcTemplate;
 	
 	
 	@Override
-	public List<Park> parks() {
+	public List<Park> getAllParks() {
+		List<Park> parks = new ArrayList<Park>();
+		String getAllParks = "SELECT * FROM park ORDER BY name";
+		Park thePark;
+		SqlRowSet results = jdbcTemplate.queryForRowSet(getAllParks);
+		while(results.next()) {
+			thePark = mapRowToPark(results);
+			parks.add(thePark);
+		}
+		return parks;
+	}
 
-	ArrayList<Park> parks = new ArrayList<>();
-	String sqlGetAllParks = "SELECT * FROM Park Order By Name ";
-	SqlRowSet results = jdbcTemplate.queryForRowSet(sqlGetAllParks);
-	while(results.next()) {
-		Park eachPark = mapRowToPark(results);
-		parks.add(eachPark);
-	}
-	return parks;
-	
-	}
-	
 	@Override
-	public Park getParkName(String Name) {
-		Park parkName = new Park();
-	
-		String sqlParkName = "SELECT * FROM Park Where name = ? ";
-		SqlRowSet results = jdbcTemplate.queryForRowSet(sqlParkName, Name);
-		if (results.next()) {
-			parkName = mapRowToPark(results);
+	public List<Park> getParkById(long id) {
+		List<Park> parks = new ArrayList<Park>();
+		String getAllParks = "SELECT * FROM park WHERE park_id = ?";
+		Park thePark;
+		SqlRowSet results = jdbcTemplate.queryForRowSet(getAllParks, id);
+		while(results.next()) {
+			thePark = mapRowToPark(results);
+			parks.add(thePark);
 		}
-			return parkName;
-		}
-	
-	
-	
+		return parks;
+	}
 	
 	
 	private Park mapRowToPark(SqlRowSet results) {
-		Park thePark = new Park();
-		thePark.setArea(results.getInt("area"));
-		thePark.setDescription(results.getString("description"));
-		thePark.setEstablishDate(results.getDate("establish_date").toLocalDate());
-		thePark.setLocation(results.getString("location"));
+		Park thePark;
+		thePark = new Park();
+		thePark.setParkId(results.getLong("park_id"));
 		thePark.setName(results.getString("name"));
-		thePark.setParkId(results.getInt("park_id"));
-		thePark.setVisitors(results.getInt("vistors"));
-		
+		thePark.setLocation(results.getString("location"));
+		thePark.setEstablishDate(results.getDate("establish_date").toLocalDate());
+		thePark.setArea(results.getLong("area"));
+		thePark.setVisitors(results.getLong("visitors"));
+		thePark.setDescription(results.getString("description"));
 		return thePark;
-
+	}
+	
 }
-}
-
