@@ -150,7 +150,7 @@ public class CampgroundCLI {
 		
 		handleGetAvailableSites();
 	}
-//get date, handle exceptions	
+//get date from user, handle exceptions	
 	private LocalDate handleDateExceptions(String dateEnteredByUser) {
 		LocalDate resultDate = null;
 		
@@ -250,6 +250,8 @@ public class CampgroundCLI {
 //Bring up camp sites under search criteria, get available days, sum fees	
 	private void handleGetAvailableSites() {
 		System.out.println("\nResults Matching Your Search Criteria");
+		List<Site> availableSites = new ArrayList<Site>();
+		
 		availableSites = siteDAO.getAvailableSitesByReservationDate(selectedCampgroundId, arrival, departure);
 		
 		BigDecimal days = new BigDecimal((int)ChronoUnit.DAYS.between(arrival,departure));

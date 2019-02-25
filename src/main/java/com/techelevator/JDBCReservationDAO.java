@@ -33,7 +33,6 @@ public class JDBCReservationDAO implements ReservationDAO {
 	}
 	
 	
-	
 	private Reservation mapRowToReservation(SqlRowSet results) {
 		Reservation theReservation;
 		theReservation = new Reservation();

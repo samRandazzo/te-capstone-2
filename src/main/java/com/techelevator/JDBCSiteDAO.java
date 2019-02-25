@@ -23,13 +23,13 @@ public class JDBCSiteDAO implements SiteDAO {
 	public List<Site> getAvailableSitesByReservationDate(long campgroundId, LocalDate startDate, LocalDate endDate) {
 		List<Site> availableSites = new ArrayList<Site>();
 		String sqlFindTopFiveAvailableSites = "SELECT distinct * FROM site " + 
-				"join campground on site.campground_id = campground.campground_id " + 
-				"where site.campground_id = ? " + 
-				"and site_id not in " + 
-				"(select site.site_id from site " + 
+				"JOIN campground ON site.campground_id = campground.campground_id " + 
+				"WHERE site.campground_id = ? " + 
+				"AND site_id NOT IN " + 
+				"(select site.site_id FROM site " + 
 				"JOIN reservation ON reservation.site_id = site.site_id " + 
 				"WHERE ? > reservation.from_date and ? < reservation.to_date) " + 
-				"order by daily_fee " + 
+				"ORDER BY daily_fee " + 
 				"LIMIT 5";
 		Site theSite;
 		SqlRowSet results = jdbctemplate.queryForRowSet(sqlFindTopFiveAvailableSites, campgroundId, startDate, endDate);
