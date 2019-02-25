@@ -15,10 +15,8 @@ import com.techelevator.view.Menu;
 
 public class CampgroundCLI {
 	
-	//create the static final stuff here e.g. private DepartmentDAO departmentDAO
-//	private static final String PARK_MENU_DISPLAY_PARKS = "Select a Park for Further Details";
-//	private static final String[] PARK_MENU_OPTIONS = new String[] { PARK_MENU_DISPLAY_PARKS };
-//	
+//This is all our menu stuff, and methods and other things
+	
 	private static final String MAIN_MENU_OPTIONS_PARKS = "View Parks Interface";
 	private static final String MAIN_MENU_OPTIONS_QUIT = "Exit";
 	private static final String[] MAIN_MENU_OPTIONS = new String[] {MAIN_MENU_OPTIONS_PARKS, MAIN_MENU_OPTIONS_QUIT};
@@ -64,7 +62,7 @@ public class CampgroundCLI {
 		siteDAO = new JDBCSiteDAO(dataSource);
 		reservationDAO = new JDBCReservationDAO(dataSource);
 	}
-	
+//Select a park	
 	public void run() {
 		while(true) {
 			printHeading("National Park Campsite Reservation System");
@@ -77,7 +75,7 @@ public class CampgroundCLI {
 			
 		}
 	}
-	
+//Park information menus
 	private void handleParks() {
 		System.out.println("\nSelect a Park for Further Details");
 		List<Park> results = parkDAO.getAllParks();
@@ -101,7 +99,7 @@ public class CampgroundCLI {
 		
 		switchToCampMenu();
 	}
-	
+//Camp menus	
 	private void switchToCampMenu () {
 		String choice = (String)menu.getChoiceFromOptions(CAMP_MENU_OPTIONS);
 		if(choice.equals(CAMP_MENU_OPTION_ALL_CAMPGROUNDS)) {
@@ -116,7 +114,7 @@ public class CampgroundCLI {
 			handleParks();
 		}
 	}
-	
+//Reservation menus	
 	private void handleReservations() {
 		System.out.println("Select a Command");
 		
@@ -127,7 +125,7 @@ public class CampgroundCLI {
 			switchToCampMenu();
 		}
 	}
-	
+//Get all exceptions	
 	private void catchAllDateExceptionsBeforeUsingThemForSearch() {
 		
 		//HANDLE THE CAMPGROUND
@@ -146,13 +144,13 @@ public class CampgroundCLI {
 		departure = handleDateExceptions(strDeparture);
 		
 		if (departure.compareTo(arrival) <= 0) {
-			System.out.println("We don't allow timetravel (or same day departure) at our distinguished establishment.\n");
+			System.out.println("Sorry! No same day depature is allowed.\n");
 			catchAllDateExceptionsBeforeUsingThemForSearch();
 		}
 		
 		handleGetAvailableSites();
 	}
-	
+//get date from user, handle exceptions	
 	private LocalDate handleDateExceptions(String dateEnteredByUser) {
 		LocalDate resultDate = null;
 		
@@ -203,7 +201,7 @@ public class CampgroundCLI {
 		}
 			return resultDate;
 	}
-	
+//get selected camp ground and handle exceptions	
 	private long handleCampgroundExceptions (String stringCampId) {
 		int selectedCampground = 0;
 		long result = 0;
@@ -217,16 +215,16 @@ public class CampgroundCLI {
 			System.out.println("Cancelling operation, returning to Camp Menu\n");
 			switchToCampMenu();
 		} 
-		selectedCampground--; //campground has to be decremented in order to get the correct index
+		selectedCampground--; //camp ground has to be decremented in order to get the correct index
 		if (selectedCampground < 0 || selectedCampground > campsOfParkId.size() - 1) {
 			System.out.println("Please select a different value\n");
 			catchAllDateExceptionsBeforeUsingThemForSearch();
-		} else { //if it passes through all the exception cases, we'll get the ACTUAL campgroundID from our List and assign it
+		} else { 									//if it passes through all the exception cases, we'll get the ACTUAL campgroundID from our List and assign it
 			result = campsOfParkId.get(selectedCampground).getCampgroundId();
 		}
 		return result;
 	}
-	
+//get the selected site, handle errors
 	private long handleSiteExceptionsAndGetSelectedSiteId (String stringSiteNumber) {
 		int selectedSite = 0;
 		long result = 0;
@@ -249,9 +247,11 @@ public class CampgroundCLI {
 		}
 		return result;
 	}
-	
+//Bring up camp sites under search criteria, get available days, sum fees	
 	private void handleGetAvailableSites() {
 		System.out.println("\nResults Matching Your Search Criteria");
+		List<Site> availableSites = new ArrayList<Site>();
+		
 		availableSites = siteDAO.getAvailableSitesByReservationDate(selectedCampgroundId, arrival, departure);
 		System.out.println(availableSites.size());
 	//	BigDecimal days = new BigDecimal((int)ChronoUnit.DAYS.between(arrival,departure));
@@ -293,7 +293,7 @@ public class CampgroundCLI {
 		}
 		handleMakeReservation();
 	}
-	
+//If the dates are taken, look up another range	
 	private void handleEnterAlternateDateRange() {
 		System.out.println("There are no available sites for the specified date range.\nWould you like to enter an alternate date range? (Y)es, (N)o");
 		String yesOrNo = menu.getUserInput();
@@ -307,7 +307,7 @@ public class CampgroundCLI {
 			handleEnterAlternateDateRange();
 		}
 	}
-	
+//This is the reservation handling
 	private void handleMakeReservation() {
 		System.out.print("\nWhich site should be reserved (enter 0 to cancel)? >>> ");
 		String stringSiteNumber = menu.getUserInput();
@@ -321,7 +321,7 @@ public class CampgroundCLI {
 		System.out.println("\nThe reservation has been made and the confirmation id is: " + customerReservationId + "\n\n");
 		run();
 	}
-	
+	//get camp ground info with park id
 	private void viewCampgroundsByParkId(long park_id, Park selectedPark) {
 		
 		campsOfParkId = campgroundDAO.getCampgroundsByParkId(park_id);
@@ -344,7 +344,7 @@ public class CampgroundCLI {
 	public String getMonth (int month) {
 		return new DateFormatSymbols().getMonths()[month-1];
 	}
-	
+//Park choice handling, error catching	
 	private long handleParkChoice(String preChoice, List<Park> results) {
 		int numChoice = 0;
 		String strChoice = "";
@@ -375,7 +375,7 @@ public class CampgroundCLI {
 		}
 		return numChoice;
 	}
-	
+//	Display all info for the park with string formatting
 	private void displayParkInfo(long park_id, Park thePark) {
 		
 		System.out.println("\nPark Information Screen");
@@ -402,7 +402,7 @@ public class CampgroundCLI {
 	}
 	
 	
-	//stole this from the INTERNET
+	//stole this from the INTERNETS
 	public static List<String> stringBreak(String string, int maxChar) {
 
 	    List<String> subLines = new ArrayList<String>();
