@@ -245,7 +245,7 @@ public class CampgroundCLI {
 			System.out.println("Please select a different value\n");
 			handleMakeReservation();
 		} else { //if it passes through all the exception cases, we'll get the ACTUAL campgroundID from our List and assign it
-			result = availableSites.get(selectedSite).getSiteId();
+			result = availableSites.get(selectedSite).getSiteNumber();
 		}
 		return result;
 	}
@@ -253,9 +253,9 @@ public class CampgroundCLI {
 	private void handleGetAvailableSites() {
 		System.out.println("\nResults Matching Your Search Criteria");
 		availableSites = siteDAO.getAvailableSitesByReservationDate(selectedCampgroundId, arrival, departure);
-		
-		BigDecimal days = new BigDecimal((int)ChronoUnit.DAYS.between(arrival,departure));
-		
+		System.out.println(availableSites.size());
+	//	BigDecimal days = new BigDecimal((int)ChronoUnit.DAYS.between(arrival,departure));
+		long days = arrival.until(departure.plusDays(1), ChronoUnit.DAYS);
 		System.out.println(String.format("%-12s%-14s%-12s%15s%14s%10s", "Site No.", "Max Occup.", "Accessible?", "Max RV Length", "Utility", "Cost"));
 		
 		String trueOrFalse = "";
@@ -265,7 +265,7 @@ public class CampgroundCLI {
 		int count = 1;
 		
 		for (Site site : availableSites) {
-			BigDecimal sumFee = site.getDailyFee().multiply(days);
+			//BigDecimal sumFee = site.getDailyFee().multiply(BigDecimal.valueOf(days));
 			if (site.isAccessible()) {
 				trueOrFalse = "Yes";
 			} else {
@@ -282,7 +282,7 @@ public class CampgroundCLI {
 			} else {
 				utility = "N/A";
 			}
-			sumCost = "$" + Double.toString(sumFee.doubleValue()) + "0";
+			// sumCost = "$" + Double.toString(sumFee.doubleValue()) + "0";
 					
 			System.out.println(String.format("%-12d%-14s%-14s%-20s%-13s%1s",
 					count++, site.getMaxOccupancy(), trueOrFalse, 

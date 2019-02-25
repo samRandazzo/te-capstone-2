@@ -3,12 +3,14 @@ package com.techelevator;
 import static org.junit.Assert.assertEquals;
 
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.sql.DataSource;
 
 import org.junit.After;
 import org.junit.AfterClass;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -44,14 +46,20 @@ private static SingleConnectionDataSource dataSource;
 	}
 	@Before
 	public void setup() {
-		
-		
-		
 		siteDAO = new JDBCSiteDAO(getDataSource());	
-
-		
 	}
 	
+	
+	
+	
+	
+	@Test
+	public void test_Available_Sites {
+		Assert.assertFalse(siteDAO.getAvailableSitesByReservationDate(1, LocalDate.parse("2019-06-19"), LocalDate.parse("2019-06-20")).isEmpty());
 
-
+	}
+	
+	
 }
+
+
