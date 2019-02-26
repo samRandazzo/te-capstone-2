@@ -25,7 +25,7 @@ private static SingleConnectionDataSource dataSource;
 	@BeforeClass
 	public static void setupDataSource() {
 		dataSource = new SingleConnectionDataSource();
-		dataSource.setUrl("jdbc:postgresql://localhost:5432/campground");
+		dataSource.setUrl("jdbc:postgresql://localhost:5432/nationalparks");
 		dataSource.setUsername("postgres");
 		dataSource.setPassword("postgres1");
 		dataSource.setAutoCommit(false);
@@ -54,7 +54,7 @@ private static SingleConnectionDataSource dataSource;
 	
 	
 	@Test
-	public void test_Available_Sites {
+	public void testAvailableSites() {
 		Assert.assertFalse(siteDAO.getAvailableSitesByReservationDate(1, LocalDate.parse("2019-06-19"), LocalDate.parse("2019-06-20")).isEmpty());
 
 	}

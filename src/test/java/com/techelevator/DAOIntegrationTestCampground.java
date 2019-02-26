@@ -15,6 +15,8 @@ import org.junit.Test;
 import org.springframework.jdbc.datasource.SingleConnectionDataSource;
 
 public class DAOIntegrationTestCampground {
+
+
 	private JDBCCampgroundDAO campgroundDAO;
 	
 	
@@ -23,7 +25,7 @@ private static SingleConnectionDataSource dataSource;
 	@BeforeClass
 	public static void setupDataSource() {
 		dataSource = new SingleConnectionDataSource();
-		dataSource.setUrl("jdbc:postgresql://localhost:5432/campground");
+		dataSource.setUrl("jdbc:postgresql://localhost:5432/nationalparks");
 		dataSource.setUsername("postgres");
 		dataSource.setPassword("postgres1");
 		dataSource.setAutoCommit(false);
@@ -46,19 +48,16 @@ private static SingleConnectionDataSource dataSource;
 	public void setup() {
 		
 		
-		
 		campgroundDAO = new JDBCCampgroundDAO(getDataSource());	
 }
 
 	@Test
 	public void testGetAvailableCampgrounds() {
-		Campground testCamp = new Campground();
-		testCamp = campgroundDAO.getCampgroundsByParkID().get(0);
 		
-		assertEquals("Blackwoods", campgroundDAO.getCampgroundsByParkID().get(0).getName());
-		assertEquals("01", campgroundDAO.getCampgroundsByParkID().get(0).getOpenTo());
-		assertEquals("12", campgroundDAO.getCampgroundsByParkID().get(0).getOpenFrom());
-		assertEquals("35.00", campgroundDAO.getCampgroundsByParkID().get(0).getDailyFee());
+		assertEquals("Blackwoods", campgroundDAO.getCampgroundsByParkId(1).get(0).getName());
+		assertEquals(12, campgroundDAO.getCampgroundsByParkId(1).get(0).getOpenTo());
+		assertEquals(01, campgroundDAO.getCampgroundsByParkId(1).get(0).getOpenFrom());
+		assertEquals("35.0", campgroundDAO.getCampgroundsByParkId(1).get(0).getDailyFee());
 	}
 
 
